@@ -1,13 +1,18 @@
 package main
 
 import (
+	"bytes"
+	"context"
 	"encoding/json"
 	"log"
 	"os"
+
+	"go.prajeen.com/vanity/config"
+	"go.prajeen.com/vanity/template"
 )
 
 func main() {
-	var config Config
+	var config config.Config
 	file, err := os.Open("vanity.json")
 	if err != nil {
 		log.Fatalf("Error opening file: %v", err)
@@ -16,5 +21,13 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error decoding JSON: %v", err)
 	}
-	log.Printf("Config: %+v", config)
+
+	var content bytes.Buffer
+	for _, v := range config.Modules {
+		err = template.Module(config.Domain, v).Render(context.Background(), &content)
+		if err != nil {
+			log.Printf("Error rendering module: %v", err)
+		}
+		log.Printf("Rendered for %s:\n%s\n", v.Name, &content)
+	}
 }
