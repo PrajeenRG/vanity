@@ -23,6 +23,12 @@ func main() {
 	}
 
 	var content bytes.Buffer
+	err = template.Home(config).Render(context.Background(), &content)
+	if err != nil {
+		log.Printf("Error rendering home: %v", err)
+	}
+	log.Printf("Rendered home:\n%s\n", &content)
+
 	for _, v := range config.Modules {
 		err = template.Module(config.Domain, v).Render(context.Background(), &content)
 		if err != nil {

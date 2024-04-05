@@ -48,7 +48,7 @@ func Module(domain string, description config.ModuleDescription) templ.Component
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(goImport(domain+"/"+description.Name, description.VCSType, templ.URL(description.URL)))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 27, Col: 135}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 27, Col: 122}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -61,7 +61,7 @@ func Module(domain string, description config.ModuleDescription) templ.Component
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(goSource(domain, description.Name, templ.URL(description.URL)))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 28, Col: 107}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 28, Col: 98}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -87,7 +87,7 @@ func Module(domain string, description config.ModuleDescription) templ.Component
 		var templ_7745c5c3_Var5 string
 		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(description.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 32, Col: 34}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 32, Col: 25}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -100,7 +100,7 @@ func Module(domain string, description config.ModuleDescription) templ.Component
 		var templ_7745c5c3_Var6 string
 		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(description.VCSType)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 33, Col: 54}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 33, Col: 45}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -122,7 +122,7 @@ func Module(domain string, description config.ModuleDescription) templ.Component
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(description.URL)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 34, Col: 89}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 34, Col: 80}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
