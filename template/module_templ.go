@@ -10,25 +10,17 @@ import "context"
 import "io"
 import "bytes"
 
-import (
-	"fmt"
+import "go.prajeen.com/vanity/config"
 
-	"go.prajeen.com/vanity/config"
-)
-
-func vanityModule(domain string, name string) string {
-	return domain + "/" + name
+func importContent(info config.PackageInfo) string {
+	return info.ImportName + " " + info.VCSType + " " + info.URL
 }
 
-func goImport(name string, vcs string, url templ.SafeURL) string {
-	return name + " " + vcs + " " + string(url)
+func sourceContent(info config.PackageInfo) string {
+	return info.ImportName + " " + info.URL + " " + info.TreeURL + " " + info.BlobURL
 }
 
-func goSource(domain string, name string, url templ.SafeURL) string {
-	return fmt.Sprintf("%s %[2]v %[2]v/tree/master{/dir} %[2]v/blob/master{/dir}/{file}#L{line}", vanityModule(domain, name), url)
-}
-
-func Module(domain string, description config.ModuleDescription) templ.Component {
+func Module(info config.PackageInfo) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -46,9 +38,9 @@ func Module(domain string, description config.ModuleDescription) templ.Component
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(goImport(domain+"/"+description.Name, description.VCSType, templ.URL(description.URL)))
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(importContent(info))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 27, Col: 122}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 19, Col: 55}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -59,9 +51,9 @@ func Module(domain string, description config.ModuleDescription) templ.Component
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(goSource(domain, description.Name, templ.URL(description.URL)))
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(sourceContent(info))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 28, Col: 98}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 20, Col: 55}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -72,9 +64,9 @@ func Module(domain string, description config.ModuleDescription) templ.Component
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var4 string
-		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(description.Name)
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(info.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 29, Col: 28}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 21, Col: 21}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 		if templ_7745c5c3_Err != nil {
@@ -85,9 +77,9 @@ func Module(domain string, description config.ModuleDescription) templ.Component
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var5 string
-		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(description.Name)
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(info.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 32, Col: 25}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 24, Col: 18}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 		if templ_7745c5c3_Err != nil {
@@ -98,9 +90,9 @@ func Module(domain string, description config.ModuleDescription) templ.Component
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var6 string
-		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(description.VCSType)
+		templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(info.VCSType)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 33, Col: 45}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 25, Col: 38}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 		if templ_7745c5c3_Err != nil {
@@ -110,7 +102,7 @@ func Module(domain string, description config.ModuleDescription) templ.Component
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var7 templ.SafeURL = templ.URL(description.URL)
+		var templ_7745c5c3_Var7 templ.SafeURL = templ.URL(info.URL)
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(string(templ_7745c5c3_Var7)))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
@@ -120,9 +112,9 @@ func Module(domain string, description config.ModuleDescription) templ.Component
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var8 string
-		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(description.URL)
+		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(info.URL)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 34, Col: 80}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `template/module.templ`, Line: 26, Col: 66}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {

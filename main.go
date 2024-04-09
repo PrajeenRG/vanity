@@ -7,12 +7,12 @@ import (
 	"log"
 	"os"
 
-	"go.prajeen.com/vanity/config"
+	vconf "go.prajeen.com/vanity/config"
 	"go.prajeen.com/vanity/template"
 )
 
 func main() {
-	var config config.Config
+	var config vconf.Config
 	file, err := os.Open("vanity.json")
 	if err != nil {
 		log.Fatalf("Error opening file: %v", err)
@@ -29,8 +29,9 @@ func main() {
 	}
 	log.Printf("Rendered home:\n%s\n", &content)
 
-	for _, v := range config.Modules {
-		err = template.Module(config.Domain, v).Render(context.Background(), &content)
+	info := vconf.ProcessConfig(config)
+	for _, v := range info {
+		err = template.Module(v).Render(context.Background(), &content)
 		if err != nil {
 			log.Printf("Error rendering module: %v", err)
 		}
