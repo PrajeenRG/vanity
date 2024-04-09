@@ -7,13 +7,16 @@ import (
 	"log"
 	"os"
 
+	"go.prajeen.com/vanity/config"
 	vconf "go.prajeen.com/vanity/config"
 	"go.prajeen.com/vanity/template"
 )
 
 func main() {
+	opts := config.ParseCLIOpts()
+
 	var config vconf.Config
-	file, err := os.Open("vanity.json")
+	file, err := os.Open(opts.ConfigFile)
 	if err != nil {
 		log.Fatalf("Error opening file: %v", err)
 	}
