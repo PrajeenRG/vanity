@@ -1,20 +1,18 @@
 package main
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
 	"log"
 	"os"
 	"path"
 
-	"go.prajeen.com/vanity/config"
 	vconf "go.prajeen.com/vanity/config"
 	"go.prajeen.com/vanity/template"
 )
 
 func main() {
-	opts := config.ParseCLIOpts()
+	opts := vconf.ParseCLIOpts()
 
 	var config vconf.Config
 	file, err := os.Open(opts.ConfigFile)
@@ -32,15 +30,15 @@ func main() {
 		log.Fatalf("Error creating public directory: %v", err)
 	}
 
-	var content bytes.Buffer
-	err = template.Home(config).Render(context.Background(), &content)
+	f, err := os.Create(path.Join(publicDir, "index.html"))
+	if err != nil {
+		log.Printf("Error creating index.html for home: %v", err)
+	}
+	err = template.Home(config).Render(context.Background(), f)
 	if err != nil {
 		log.Printf("Error rendering home: %v", err)
 	}
-	err = os.WriteFile(path.Join(publicDir, "index.html"), content.Bytes(), os.ModePerm)
-	if err != nil {
-		log.Printf("Error writing html for home: %v", err)
-	}
+	log.Printf("Created index.html for home page")
 
 	info := vconf.ProcessConfig(config)
 	for _, v := range info {
@@ -50,14 +48,14 @@ func main() {
 			continue
 		}
 
-		content.Reset()
-		err = template.Module(v).Render(context.Background(), &content)
+		f, err = os.Create(path.Join(publicDir, v.Name, "index.html"))
+		if err != nil {
+			log.Printf("Error creating index.html for module %s: %v", v.Name, err)
+		}
+		err = template.Module(v).Render(context.Background(), f)
 		if err != nil {
 			log.Printf("Error rendering module: %v", err)
 		}
-		err = os.WriteFile(path.Join(publicDir, v.Name, "index.html"), content.Bytes(), os.ModePerm)
-		if err != nil {
-			log.Printf("Error writing html for module %s: %v", v.Name, err)
-		}
+		log.Printf("Created index.html for module %s", v.Name)
 	}
 }
