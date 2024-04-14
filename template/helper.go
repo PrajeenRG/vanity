@@ -1,25 +1,37 @@
 package template
 
-import "strings"
+import (
+	"strings"
 
-func PkgDocURL(pkg string) string {
+	"go.prajeen.com/vanity/config"
+)
+
+func pkgDocURL(pkg string) string {
 	return "https://pkg.go.dev/" + pkg
 }
 
-func PkgBadgeURL(pkg string) string {
+func pkgBadgeURL(pkg string) string {
 	return "https://pkg.go.dev/badge/" + pkg + ".svg"
 }
 
-func URL(url string) string {
+func url(url string) string {
 	if strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://") {
 		return url
 	}
 	return "https://" + url
 }
 
-func URLWithoutScheme(url string) string {
+func urlWithoutScheme(url string) string {
 	if !strings.ContainsAny(url, "://") {
 		return url
 	}
 	return strings.SplitAfter(url, "://")[1]
+}
+
+func importContent(info config.PackageInfo) string {
+	return info.ImportName + " " + info.VCSType + " " + info.URL
+}
+
+func sourceContent(info config.PackageInfo) string {
+	return info.ImportName + " " + info.URL + " " + info.TreeURL + " " + info.BlobURL
 }
