@@ -8,6 +8,8 @@
 !go.sum
 !go.mod
 
+!*.templ
+
 !README.md
 !LICENSE
 !.envrc
