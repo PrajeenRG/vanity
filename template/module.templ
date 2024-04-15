@@ -16,10 +16,10 @@ templ Module(info config.PackageInfo) {
 		</head>
 		<body>
 			<div class="container">
-				<p class="h2">{ info.Name }</p>
-				<p>{ info.Description }</p>
-				<p><strong>VCS:</strong> { info.VCSType }</p>
-				<p><strong>URL:</strong> <a href={ templ.URL(url(info.URL)) }>{ urlWithoutScheme(info.URL) }</a></p>
+				<p class="h1">{ info.Name }</p>
+				<p class="lead">{ info.Description }</p>
+				<p class="text-body-secondary"><strong>VCS:</strong> { info.VCSType }</p>
+				<p class="text-body-secondary"><strong>URL:</strong> <a href={ templ.URL(url(info.URL)) }>{ urlWithoutScheme(info.URL) }</a></p>
 			</div>
 		</body>
 	</html>

@@ -25,8 +25,8 @@ templ Home(config config.Config) {
 					<tbody>
 						for _, v := range config.Modules {
 							<tr>
-								<td>
-									<p class="h5 text-body-secondary">{ config.Domain }/{ v.Name }</p>
+								<td class="text-body-secondary">
+									<p class="h5">{ config.Domain }/{ v.Name }</p>
 									{ v.Description }
 								</td>
 								<td><a href={ templ.URL(url(v.URL)) }>{ urlWithoutScheme(v.URL) }</a></td>
